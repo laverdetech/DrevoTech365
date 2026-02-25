@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DrevoTech365 - Ekonomický Model</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom overrides if needed */
+        .glass-card {
+            position: relative;
+            background-color: rgb(15 23 42 / 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgb(51 65 85 / 0.5);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        @media (min-width: 768px) {
+            .glass-card { padding: 2rem; }
+        }
+        .glass-card.hoverable:hover {
+            background-color: rgb(30 41 59 / 0.5);
+            border-color: rgb(16 185 129 / 0.3);
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.1);
+        }
+        .glass-inner-glow {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom right, rgba(255,255,255,0.05), transparent);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        /* Accordion transition classes */
+        .accordion-content {
+            max-height: 0;
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+            overflow: hidden;
+        }
+        .accordion-content.open {
+            max-height: 200px; /* arbitrary large enough value */
+            opacity: 1;
+            padding-bottom: 1.5rem;
+        }
+        /* Custom scrollbar for better look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-300 font-sans selection:bg-emerald-500/30 selection:text-emerald-200">
+
+    <!-- Background ambient effects -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-emerald-600/10 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[150px]"></div>
+        <div class="absolute top-[40%] left-[60%] w-[30%] h-[30%] bg-teal-600/10 rounded-full blur-[100px]"></div>
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.02]"></div>
+    </div>
+
+    <!-- Navigation Breadcrumb -->
+    <nav class="relative z-50 border-b border-slate-800/50 bg-slate-950/50 backdrop-blur-xl sticky top-0">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-2 text-sm text-slate-400">
+                <i data-lucide="home" class="w-4 h-4 hover:text-emerald-400 cursor-pointer transition-colors"></i>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <span class="hover:text-emerald-400 cursor-pointer transition-colors">Projekty</span>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <span class="text-emerald-400 font-medium">Ekonomický Model</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-4">
+                <div class="flex items-center space-x-2 bg-emerald-500/10 text-emerald-400 px-3 py-1 rounded-full border border-emerald-500/20 text-xs font-semibold tracking-wider uppercase">
+                    <i data-lucide="activity" class="w-3 h-3 mr-1"></i>
+                    Investor Data Room
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative z-10 max-w-7xl mx-auto px-6 py-16 space-y-32">
+        
+        <!-- 1. HERO SECTION -->
+        <section class="pt-8">
+            <div class="text-center max-w-4xl mx-auto mb-16">
+                <div class="inline-flex items-center justify-center space-x-2 bg-slate-800/50 border border-slate-700 rounded-full px-4 py-1.5 mb-6 text-sm text-emerald-400 font-medium">
+                    <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                    <span>Analýza biznis modelu</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight mb-6">
+                    Od surovej guľatiny k <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">vysokomaržovému</span> produktu
+                </h1>
+                <p class="text-xl text-slate-400">
+                    Ekonomika pridanej hodnoty v lesníckom sektore. Dekonštrukcia modelu, ktorý mení nízkoobrátkovú surovinu na prémiovú službu.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Pillar 1 -->
+                <div class="glass-card hoverable group text-center flex flex-col items-center">
+                    <div class="glass-inner-glow"></div>
+                    <div class="relative z-10 w-full flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center justify-center mb-6 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30 transition-colors">
+                            <i data-lucide="settings" class="w-8 h-8 text-emerald-400 group-hover:scale-110 transition-transform"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Spracovanie</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Technologická transformácia. Objemový nárast 1 m³ -> 1,6 prms dramaticky zvyšuje predajnú bázu.</p>
+                    </div>
+                </div>
+                <!-- Pillar 2 -->
+                <div class="glass-card hoverable group text-center flex flex-col items-center">
+                    <div class="glass-inner-glow"></div>
+                    <div class="relative z-10 w-full flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center justify-center mb-6 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30 transition-colors">
+                            <i data-lucide="zap" class="w-8 h-8 text-emerald-400 group-hover:scale-110 transition-transform"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Dostupnosť</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">On-site služba priamo na dvore. Eliminácia logistických nákladov (úspora cca 1,00 €/km pre klienta).</p>
+                    </div>
+                </div>
+                <!-- Pillar 3 -->
+                <div class="glass-card hoverable group text-center flex flex-col items-center">
+                    <div class="glass-inner-glow"></div>
+                    <div class="relative z-10 w-full flex flex-col items-center">
+                        <div class="w-16 h-16 rounded-2xl bg-slate-800/80 border border-slate-700 flex items-center justify-center mb-6 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30 transition-colors">
+                            <i data-lucide="users" class="w-8 h-8 text-emerald-400 group-hover:scale-110 transition-transform"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Úspora námahy</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Zákazník nekupuje len drevo, kupuje komfort. Najvyššia forma pridanej hodnoty v ekonomike služieb.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. MECHANIZMUS PRIDANEJ HODNOTY -->
+        <section>
+            <div class="mb-12 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">Mechanizmus tvorby pridanej hodnoty</h2>
+                <p class="text-lg text-slate-400 max-w-3xl mx-auto">Fyzikálna premena je základom ekonomickej výhody. Pri štiepaní dochádza k objemovej expanzii materiálu.</p>
+            </div>
+            
+            <div class="glass-card max-w-5xl mx-auto">
+                <div class="glass-inner-glow"></div>
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                            <i data-lucide="tree-pine" class="w-6 h-6 mr-3 text-emerald-400"></i>
+                            Objemová multiplikácia
+                        </h3>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between mb-2 text-sm font-medium">
+                                    <span>Cena suroviny (1 m³)</span>
+                                    <span class="text-emerald-400" id="rawPriceDisplay">20 €</span>
+                                </div>
+                                <input type="range" id="rawPriceInput" min="10" max="60" step="1" value="20" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                            </div>
+                            
+                            <div class="bg-slate-950/50 rounded-xl p-5 border border-slate-800/50">
+                                <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-800">
+                                    <span class="text-slate-400">Vstupný objem</span>
+                                    <span class="text-white font-mono text-lg">1.00 m³</span>
+                                </div>
+                                <div class="flex items-center justify-between mb-4 pb-4 border-b border-slate-800">
+                                    <span class="text-emerald-400 flex items-center">
+                                        <i data-lucide="trending-up" class="w-4 h-4 mr-2"></i>
+                                        Multiplikátor spracovania
+                                    </span>
+                                    <span class="text-emerald-400 font-mono text-lg">x 1.55</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-300 font-medium">Výstupný objem (prms)</span>
+                                    <span class="text-white font-mono text-xl font-bold" id="processedVolumeDisplay">1.55 prms</span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-emerald-900/20 border border-emerald-500/20 rounded-xl">
+                                <p class="text-sm text-emerald-200/80 leading-relaxed">
+                                    Zatiaľ čo zákazník nakupuje surovinu za <span id="rawPriceText">20</span> €/m³, po spracovaní sa jeho náklad na reálnu predajnú jednotku (prms) znižuje na <strong id="costPerPrmsText">12.90 €</strong>. Toto tvorí priestor pre maržu služby.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Flow Representation -->
+                    <div class="relative flex flex-col items-center justify-center py-8">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/5 to-transparent rounded-full blur-2xl"></div>
+                        
+                        <!-- Input node -->
+                        <div class="relative z-10 w-32 h-32 rounded-full border-2 border-slate-700 bg-slate-900 flex flex-col items-center justify-center shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+                            <span class="text-2xl font-bold text-white">1 m³</span>
+                            <span class="text-xs text-slate-400 uppercase tracking-wider mt-1">Guľatina</span>
+                        </div>
+
+                        <!-- Arrow -->
+                        <div class="h-16 w-1 bg-gradient-to-b from-slate-700 to-emerald-500 relative z-0">
+                            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 border-r-2 border-b-2 border-emerald-500 rotate-45"></div>
+                        </div>
+
+                        <!-- Processing node -->
+                        <div class="relative z-10 w-48 h-20 rounded-xl border border-emerald-500/50 bg-emerald-500/10 flex items-center justify-center backdrop-blur-md my-2 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                            <i data-lucide="settings" class="w-6 h-6 text-emerald-400 mr-2 animate-[spin_3s_linear_infinite]"></i>
+                            <span class="text-emerald-400 font-semibold uppercase tracking-wider text-sm">JAPA 365 PRO</span>
+                        </div>
+
+                        <!-- Arrow -->
+                        <div class="h-16 w-1 bg-gradient-to-b from-emerald-500 to-teal-400 relative z-0">
+                            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 border-r-2 border-b-2 border-teal-400 rotate-45"></div>
+                        </div>
+
+                        <!-- Output node -->
+                        <div class="relative z-10 w-40 h-40 rounded-full border-2 border-teal-400 bg-slate-900 flex flex-col items-center justify-center shadow-[0_0_40px_rgba(45,212,191,0.2)]">
+                            <span class="text-3xl font-bold text-teal-300">1.55</span>
+                            <span class="text-sm font-medium text-white">prms</span>
+                            <span class="text-[10px] text-teal-500 uppercase tracking-wider mt-1">Sypané polená</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. EKONOMICKÁ PRIEPASŤ (VALUE GAP) -->
+        <section>
+            <div class="mb-12 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">Analýza ziskovej medzery (Value Gap)</h2>
+                <p class="text-lg text-slate-400 max-w-3xl mx-auto">Dramatický rozdiel medzi cenou suroviny na vidieku a trhovou cenou hotového produktu v mestách je jadrom tohto biznisu.</p>
+            </div>
+            
+            <div class="glass-card">
+                <div class="glass-inner-glow"></div>
+                <div class="relative z-10 flex flex-col md:flex-row gap-8 mb-8">
+                    <div class="flex-1">
+                        <div class="flex space-x-2 bg-slate-900 p-1 rounded-lg border border-slate-800 w-fit mb-8">
+                            <button id="btnUrbar" class="px-4 py-2 rounded-md text-sm font-medium transition-all bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                                Urbár (Nárokové)
+                            </button>
+                            <button id="btnTrh" class="px-4 py-2 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white border border-transparent">
+                                Trhový nákup
+                            </button>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="flex justify-between items-end border-b border-slate-800 pb-4">
+                                <div>
+                                    <div class="text-sm text-slate-400 mb-1">Náklad na surovinu</div>
+                                    <div class="text-xl font-medium text-white" id="gapName">Nárokové drevo (Urbár)</div>
+                                </div>
+                                <div class="text-2xl font-mono text-slate-300"><span id="gapRaw">12</span> € / prm</div>
+                            </div>
+                            
+                            <div class="flex justify-between items-end border-b border-slate-800 pb-4">
+                                <div>
+                                    <div class="text-sm text-emerald-400/80 mb-1">Náklad na službu</div>
+                                    <div class="text-xl font-medium text-emerald-400">Mobilné štiepanie (My)</div>
+                                </div>
+                                <div class="text-2xl font-mono text-emerald-400">+<span id="gapService">15</span> € / prms</div>
+                            </div>
+
+                            <div class="flex justify-between items-end border-b border-slate-700 pb-4 pt-2">
+                                <div>
+                                    <div class="text-sm text-slate-400 mb-1">Celkový náklad zákazníka</div>
+                                    <div class="text-xl font-bold text-white">Surovina + Služba</div>
+                                </div>
+                                <div class="text-3xl font-mono font-bold text-white"><span id="gapTotal">27</span> €</div>
+                            </div>
+
+                            <div class="pt-4 flex items-center justify-between bg-emerald-900/20 p-5 rounded-xl border border-emerald-500/20 mt-6">
+                                <div>
+                                    <div class="text-sm text-emerald-300 mb-1">Trhová hodnota produktu (ZA)</div>
+                                    <div class="text-2xl font-bold text-white"><span id="gapMarket">79</span> € / prms</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-sm text-emerald-300 mb-1">Finančná úspora klienta</div>
+                                    <div class="text-3xl font-mono font-bold text-emerald-400"><span id="gapSavings">52</span> € (<span id="gapMargin">66</span>%)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Bar Chart Comparison -->
+                    <div class="flex-1 flex items-end justify-around h-80 bg-slate-900/50 rounded-xl border border-slate-800 p-6 pt-12 relative">
+                        <div class="absolute top-4 left-6 text-xs text-slate-500 uppercase tracking-widest">Cenové porovnanie (€)</div>
+                        
+                        <!-- Bar 1: Raw Cost -->
+                        <div class="relative flex flex-col items-center group w-1/4">
+                            <span class="absolute -top-8 text-slate-300 font-mono font-medium" id="bar1Text">12€</span>
+                            <div id="bar1Fill" class="w-full bg-slate-700 rounded-t-md transition-all duration-500 group-hover:bg-slate-600 border-t border-slate-500" style="height: 12%; min-height: 20px;"></div>
+                            <span class="mt-4 text-xs text-slate-400 text-center font-medium">Drevo</span>
+                        </div>
+
+                        <!-- Bar 2: Raw + Service -->
+                        <div class="relative flex flex-col items-center group w-1/4">
+                            <span class="absolute -top-8 text-white font-mono font-bold" id="bar2Text">27€</span>
+                            <div class="w-full flex flex-col-reverse justify-start h-full items-center">
+                                <div id="bar2BaseFill" class="w-full bg-slate-700 transition-all duration-500" style="height: 12%;"></div>
+                                <div id="bar2TopFill" class="w-full bg-emerald-500 rounded-t-md transition-all duration-500 shadow-[0_0_15px_rgba(16,185,129,0.5)] z-10" style="height: 15%; min-height: 20px;"></div>
+                            </div>
+                            <span class="mt-4 text-xs text-slate-400 text-center font-medium leading-tight">Drevo +<br>Služba</span>
+                        </div>
+
+                        <!-- Bar 3: Market Value -->
+                        <div class="relative flex flex-col items-center group w-1/4">
+                            <span class="absolute -top-8 text-emerald-400 font-mono font-bold" id="bar3Text">79€</span>
+                            <div id="bar3Fill" class="w-full bg-gradient-to-t from-slate-800 to-slate-600 rounded-t-md transition-all duration-500 border-t border-slate-400/50 group-hover:from-slate-700 group-hover:to-slate-500 opacity-60" style="height: 79%;">
+                                <!-- Savings overlay -->
+                                <div id="bar3Overlay" class="w-full absolute top-0 left-0 bg-emerald-500/20 border-b border-emerald-500/50 flex items-center justify-center backdrop-blur-sm" style="height: 65.8%;">
+                                    <span class="text-emerald-300 font-bold text-sm tracking-wide transform -rotate-90 md:rotate-0">ÚSPORA</span>
+                                </div>
+                            </div>
+                            <span class="mt-4 text-xs text-slate-400 text-center font-medium leading-tight">Hotové<br>v meste</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center text-sm text-slate-400 max-w-2xl mx-auto relative z-10">
+                    Zákazník získava rovnakú úžitkovú hodnotu, no zachováva si maržu, ktorú by inak zaplatil komerčnému dodávateľovi a za prepravu. Toto je <span class="text-white">definícia obojstranne výhodného (win-win) biznisu</span>.
+                </p>
+            </div>
+        </section>
+
+        <!-- 4 & 5. TECHNOLÓGIA & DEMOGRAFIA (Grid layout) -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Technológia -->
+            <div class="glass-card flex flex-col">
+                <div class="glass-inner-glow"></div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <h3 class="text-2xl font-bold text-white mb-2 flex items-center">
+                        <i data-lucide="settings" class="w-6 h-6 mr-3 text-emerald-400"></i>
+                        Maržový multiplikátor
+                    </h3>
+                    <p class="text-slate-400 text-sm mb-8">JAPA 365 PRO ako technologický engine operácie.</p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                            <div class="text-slate-400 text-xs uppercase tracking-wider mb-1">Výkon</div>
+                            <div class="text-2xl font-bold text-white">5 prms/h</div>
+                        </div>
+                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                            <div class="text-slate-400 text-xs uppercase tracking-wider mb-1">Spotreba</div>
+                            <div class="text-2xl font-bold text-emerald-400">1,2 L/h</div>
+                        </div>
+                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                            <div class="text-slate-400 text-xs uppercase tracking-wider mb-1">Pohon</div>
+                            <div class="text-lg font-bold text-white leading-tight">Honda iGX700<br><span class="text-sm text-slate-500 font-normal">22 HP (16.4 kW)</span></div>
+                        </div>
+                        <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
+                            <div class="text-slate-400 text-xs uppercase tracking-wider mb-1">Max. priemer</div>
+                            <div class="text-2xl font-bold text-white">36 cm</div>
+                        </div>
+                    </div>
+
+                    <div id="machineToggleBtn" class="mt-auto bg-slate-950/50 border border-slate-800 p-5 rounded-xl cursor-pointer hover:border-emerald-500/30 transition-colors">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-sm font-medium text-slate-300">Spracovanie 20 metrov dreva</span>
+                            <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded">Klikni pre zmenu</span>
+                        </div>
+                        
+                        <div class="relative h-16 overflow-hidden rounded-lg bg-slate-900 flex items-center justify-center">
+                            <!-- Machine View -->
+                            <div id="viewMachine" class="absolute inset-0 bg-emerald-900/20 flex items-center justify-center animate-pulse transition-opacity duration-300">
+                                <span class="text-xl font-bold text-emerald-400 flex items-center">
+                                    <i data-lucide="zap" class="w-5 h-5 mr-2"></i> Stroj JAPA: 3-4 hodiny
+                                </span>
+                            </div>
+                            <!-- Manual View -->
+                            <div id="viewManual" class="absolute inset-0 bg-red-900/10 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+                                <span class="text-xl font-bold text-slate-400 flex items-center">
+                                    <i data-lucide="users" class="w-5 h-5 mr-2"></i> Manuálne (3 ľudia): 2 dni
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demografia -->
+            <div class="glass-card flex flex-col">
+                <div class="glass-inner-glow"></div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <h3 class="text-2xl font-bold text-white mb-2 flex items-center">
+                        <i data-lucide="activity" class="w-6 h-6 mr-3 text-emerald-400"></i>
+                        Sociálno-demografický driver
+                    </h3>
+                    <p class="text-slate-400 text-sm mb-8">Riešenie reálneho problému starnúceho vidieka.</p>
+
+                    <div class="space-y-4 mb-6 flex-1">
+                        <div class="flex items-start p-4 bg-slate-900/50 rounded-xl border border-slate-800/50">
+                            <div class="bg-orange-500/10 p-2 rounded-lg mr-4 mt-1">
+                                <i data-lucide="clock" class="w-5 h-5 text-orange-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-medium mb-1">Fyzická náročnosť a vek</h4>
+                                <p class="text-sm text-slate-400">Príprava 20m paliva je pre staršiu generáciu v regiónoch stredného Slovenska existenčnou a často nezvládnuteľnou výzvou.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start p-4 bg-slate-900/50 rounded-xl border border-slate-800/50">
+                            <div class="bg-red-500/10 p-2 rounded-lg mr-4 mt-1">
+                                <i data-lucide="alert-triangle" class="w-5 h-5 text-red-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-medium mb-1">Riziká úrazov (BOZP)</h4>
+                                <p class="text-sm text-slate-400">Manuálna práca so sekerou a voľnou reťazou píly nesie neúmerné riziko vážnych a fatálnych úrazov.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start p-4 bg-emerald-900/20 rounded-xl border border-emerald-500/20 relative overflow-hidden">
+                            <div class="absolute right-0 top-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl -mr-16 -mt-16 pointer-events-none"></div>
+                            <div class="bg-emerald-500/20 p-2 rounded-lg mr-4 mt-1 border border-emerald-500/30">
+                                <i data-lucide="shield" class="w-5 h-5 text-emerald-400"></i>
+                            </div>
+                            <div class="relative z-10">
+                                <h4 class="text-white font-medium mb-1">Technologické riešenie</h4>
+                                <p class="text-sm text-emerald-200/80">Stroj s uzavretou hydraulikou, bezpečnostným blokovaním krytov a joystickovým ovládaním mení nebezpečnú drinu na bezpečnú službu.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. MARŽOVÝ ENGINE - INTERAKTÍVNY PROFIT MODEL (Dominant) -->
+        <section id="kalkulacka">
+            <div class="mb-12 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">Maržový Engine & ROI</h2>
+                <p class="text-lg text-slate-400 max-w-3xl mx-auto">Modelujte si finančnú návratnosť investície. Otestujte si senzitivitu zisku na zmenu hodinovej dotácie alebo cenníka.</p>
+            </div>
+            
+            <div class="glass-card !p-0">
+                <div class="glass-inner-glow"></div>
+                <div class="relative z-10 flex flex-col xl:flex-row">
+                    <!-- Inputs -->
+                    <div class="flex-1 bg-slate-900/80 p-8 border-b xl:border-b-0 xl:border-r border-slate-800">
+                        <h3 class="text-xl font-bold text-white mb-6 flex items-center">
+                            <i data-lucide="settings" class="w-5 h-5 mr-3 text-emerald-400"></i>
+                            Vstupné parametre
+                        </h3>
+                        
+                        <div class="space-y-8">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-sm font-medium text-slate-300">Cena služby za 1 prms</label>
+                                    <span class="text-emerald-400 font-bold" id="servicePriceDisplay">12 €</span>
+                                </div>
+                                <input type="range" id="servicePriceInput" min="10" max="18" step="1" value="12" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                                <div class="flex justify-between mt-1 text-xs text-slate-500">
+                                    <span>10 €</span><span>18 €</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <label class="text-sm font-medium text-slate-300">Ročné odpracované hodiny</label>
+                                    <span class="text-emerald-400 font-bold" id="annualHoursDisplay">800 h</span>
+                                </div>
+                                <input type="range" id="annualHoursInput" min="400" max="1200" step="50" value="800" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                                <div class="flex justify-between mt-1 text-xs text-slate-500">
+                                    <span>400h (Konzervatívne)</span><span>1200h (Agresívne)</span>
+                                </div>
+                            </div>
+
+                            <div class="pt-6 border-t border-slate-800 space-y-3">
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-slate-400">Výkon stroja (fix)</span>
+                                    <span class="text-white">5 prms / h</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-slate-400">Hodinový OPEX (fix)</span>
+                                    <span class="text-white">12,60 € / h</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-slate-400">Odhadovaný CAPEX</span>
+                                    <span class="text-white font-mono">43 300 €</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Outputs -->
+                    <div class="flex-[1.5] p-8 relative">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+                        
+                        <div class="grid grid-cols-2 gap-4 mb-8">
+                            <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-800 relative overflow-hidden group">
+                                <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="text-xs text-slate-400 uppercase tracking-wider mb-2">Hodinový Výnos</div>
+                                <div class="text-3xl font-bold text-white font-mono" id="hourlyRevDisplay">60.00 €</div>
+                                <div class="text-xs text-slate-500 mt-1">Pri 5 prms/h</div>
+                            </div>
+                            
+                            <div class="bg-slate-900/50 p-4 rounded-xl border border-emerald-500/20 relative overflow-hidden group">
+                                <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="text-xs text-emerald-400 uppercase tracking-wider mb-2">Contribution Margin</div>
+                                <div class="text-3xl font-bold text-emerald-400 font-mono" id="contMarginDisplay">47.40 €</div>
+                                <div class="text-xs text-slate-500 mt-1">Príspevok na úhradu (h)</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 mb-6 shadow-inner">
+                            <div class="flex justify-between items-end mb-4">
+                                <div>
+                                    <h4 class="text-white font-bold text-lg mb-1">Čistý prevádzkový zisk</h4>
+                                    <div class="text-sm text-slate-400">Po odpočítaní OPEX a ročných odpisov (8660 €)</div>
+                                </div>
+                                <div class="text-right">
+                                    <div id="netProfitDisplay" class="text-4xl font-extrabold font-mono tracking-tighter text-white">
+                                        29 260 €
+                                    </div>
+                                    <div class="text-sm text-emerald-400 mt-1 font-medium">Ročne</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Visual Profit Bar -->
+                            <div class="h-4 w-full bg-slate-800 rounded-full overflow-hidden flex">
+                                <div id="profitBarOdpisy" class="h-full bg-slate-600" style="width: 22.8%;" title="Odpisy"></div>
+                                <div id="profitBarZisk" class="h-full bg-emerald-500" style="width: 77.2%;" title="Čistý zisk"></div>
+                            </div>
+                            <div class="flex justify-between text-xs mt-2 text-slate-500">
+                                <span>Fixné odpisy (8660 €)</span>
+                                <span id="profitTextZisk" class="text-emerald-500/80">Čistý zisk</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/30 text-center">
+                                <div class="text-sm text-slate-400 mb-1">ROI (Návratnosť investície)</div>
+                                <div id="roiDisplay" class="text-2xl font-bold text-emerald-400">
+                                    67.6%
+                                </div>
+                            </div>
+                            <div class="p-4 rounded-xl border border-slate-800 bg-slate-900/30 text-center">
+                                <div class="text-sm text-slate-400 mb-1">Doba návratnosti (CAPEX)</div>
+                                <div id="paybackDisplay" class="text-2xl font-bold text-white">
+                                    17.8 <span class="text-base font-normal text-slate-500">mes.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. STRATEGICKÉ RIZIKÁ -->
+        <section>
+            <div class="mb-12 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">Manažment strategických rizík</h2>
+                <p class="text-lg text-slate-400 max-w-3xl mx-auto">Žiadny model nie je bez rizika. Transparentná identifikácia a mitigácia je znakom profesionálneho riadenia.</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto space-y-4">
+                <!-- Risk 1 -->
+                <div class="glass-card !p-0 transition-all duration-300 border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.05)]" data-acc-index="0">
+                    <div class="glass-inner-glow"></div>
+                    <div class="relative z-10">
+                        <div class="px-6 py-5 flex items-center justify-between cursor-pointer acc-header">
+                            <h3 class="font-bold text-lg flex items-center transition-colors text-emerald-400 acc-title">
+                                <i data-lucide="shield" class="w-5 h-5 mr-3 text-emerald-400 acc-icon"></i>
+                                Znečistená guľatina
+                            </h3>
+                            <i data-lucide="chevron-up" class="w-5 h-5 text-emerald-400 acc-chevron"></i>
+                        </div>
+                        <div class="px-6 accordion-content open">
+                            <div class="flex items-center space-x-4 mb-4 text-xs font-medium">
+                                <span class="bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">Dopad: Vysoký</span>
+                                <span class="bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">Pravdepodobnosť: Stredná</span>
+                            </div>
+                            <div class="bg-emerald-900/10 p-4 rounded-lg border border-emerald-500/10">
+                                <p class="text-sm text-slate-300"><strong class="text-emerald-400">Riešenie:</strong> Striktné podmienky prijatia zákazky a príplatky za znečistené drevo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk 2 -->
+                <div class="glass-card !p-0 transition-all duration-300" data-acc-index="1">
+                    <div class="glass-inner-glow"></div>
+                    <div class="relative z-10">
+                        <div class="px-6 py-5 flex items-center justify-between cursor-pointer acc-header">
+                            <h3 class="font-bold text-lg flex items-center transition-colors text-white acc-title">
+                                <i data-lucide="shield" class="w-5 h-5 mr-3 text-slate-500 acc-icon"></i>
+                                Servisná dostupnosť
+                            </h3>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-500 acc-chevron"></i>
+                        </div>
+                        <div class="px-6 accordion-content">
+                            <div class="flex items-center space-x-4 mb-4 text-xs font-medium">
+                                <span class="bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">Dopad: Kritický</span>
+                                <span class="bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">Pravdepodobnosť: Nízka</span>
+                            </div>
+                            <div class="bg-emerald-900/10 p-4 rounded-lg border border-emerald-500/10">
+                                <p class="text-sm text-slate-300"><strong class="text-emerald-400">Riešenie:</strong> Spolupráca s autorizovaným servisom (DCSK) a držanie kritických dielov na sklade.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Risk 3 -->
+                <div class="glass-card !p-0 transition-all duration-300" data-acc-index="2">
+                    <div class="glass-inner-glow"></div>
+                    <div class="relative z-10">
+                        <div class="px-6 py-5 flex items-center justify-between cursor-pointer acc-header">
+                            <h3 class="font-bold text-lg flex items-center transition-colors text-white acc-title">
+                                <i data-lucide="shield" class="w-5 h-5 mr-3 text-slate-500 acc-icon"></i>
+                                Sezónnosť dopytu
+                            </h3>
+                            <i data-lucide="chevron-down" class="w-5 h-5 text-slate-500 acc-chevron"></i>
+                        </div>
+                        <div class="px-6 accordion-content">
+                            <div class="flex items-center space-x-4 mb-4 text-xs font-medium">
+                                <span class="bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">Dopad: Stredný</span>
+                                <span class="bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">Pravdepodobnosť: Vysoká</span>
+                            </div>
+                            <div class="bg-emerald-900/10 p-4 rounded-lg border border-emerald-500/10">
+                                <p class="text-sm text-slate-300"><strong class="text-emerald-400">Riešenie:</strong> Predpredaj služieb mimo hlavnej sezóny, diverzifikácia na iné lesnícke práce.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. ZLATÉ PRAVIDLÁ MODELU -->
+        <section class="pb-16">
+            <div class="mb-12 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">5 Zlatých pravidiel modelu</h2>
+                <p class="text-lg text-slate-400 max-w-3xl mx-auto">Základné strategické piliere, ktoré tvoria fundamentálnu hodnotu podniku.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Rule 1 -->
+                <div class="glass-card hoverable group">
+                    <div class="glass-inner-glow"></div>
+                    <div class="text-5xl font-black text-slate-800/50 absolute top-4 right-6 group-hover:text-emerald-500/10 transition-colors">01</div>
+                    <h4 class="text-xl font-bold text-white mb-3 mt-4 relative z-10">Služba namiesto komodity</h4>
+                    <p class="text-slate-400 text-sm relative z-10 leading-relaxed">Nepredávame drevo. Predávame okamžitý komfort a ušetrený čas zákazníka.</p>
+                </div>
+                <!-- Rule 2 -->
+                <div class="glass-card hoverable group">
+                    <div class="glass-inner-glow"></div>
+                    <div class="text-5xl font-black text-slate-800/50 absolute top-4 right-6 group-hover:text-emerald-500/10 transition-colors">02</div>
+                    <h4 class="text-xl font-bold text-white mb-3 mt-4 relative z-10">Technológia > Manuálna práca</h4>
+                    <p class="text-slate-400 text-sm relative z-10 leading-relaxed">Stroj JAPA rieši demografický deficit a nahrádza nedostupnú ľudskú silu.</p>
+                </div>
+                <!-- Rule 3 -->
+                <div class="glass-card hoverable group">
+                    <div class="glass-inner-glow"></div>
+                    <div class="text-5xl font-black text-slate-800/50 absolute top-4 right-6 group-hover:text-emerald-500/10 transition-colors">03</div>
+                    <h4 class="text-xl font-bold text-white mb-3 mt-4 relative z-10">Mobilita = Výhoda</h4>
+                    <p class="text-slate-400 text-sm relative z-10 leading-relaxed">On-site servis (do 10 minút rozložené) radikálne reže logistické náklady klienta.</p>
+                </div>
+                <!-- Rule 4 -->
+                <div class="glass-card hoverable group">
+                    <div class="glass-inner-glow"></div>
+                    <div class="text-5xl font-black text-slate-800/50 absolute top-4 right-6 group-hover:text-emerald-500/10 transition-colors">04</div>
+                    <h4 class="text-xl font-bold text-white mb-3 mt-4 relative z-10">OPEX kontrola</h4>
+                    <p class="text-slate-400 text-sm relative z-10 leading-relaxed">Extrémne nízka spotreba (1,2 L/h Honda motora) chráni prevádzkovú maržu.</p>
+                </div>
+                <!-- Rule 5 -->
+                <div class="glass-card hoverable group">
+                    <div class="glass-inner-glow"></div>
+                    <div class="text-5xl font-black text-slate-800/50 absolute top-4 right-6 group-hover:text-emerald-500/10 transition-colors">05</div>
+                    <h4 class="text-xl font-bold text-white mb-3 mt-4 relative z-10">Bezpečnosť predáva</h4>
+                    <p class="text-slate-400 text-sm relative z-10 leading-relaxed">Certifikovaná technika buduje dôveru a eliminuje riziká po domácky robených riešení.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Inicializácia Lucide ikon
+        lucide.createIcons();
+
+        // ----------------------------------------------------
+        // 2. MECHANIZMUS PRIDANEJ HODNOTY (Slider)
+        // ----------------------------------------------------
+        const rawPriceInput = document.getElementById('rawPriceInput');
+        const rawPriceDisplay = document.getElementById('rawPriceDisplay');
+        const processedVolumeDisplay = document.getElementById('processedVolumeDisplay');
+        const rawPriceText = document.getElementById('rawPriceText');
+        const costPerPrmsText = document.getElementById('costPerPrmsText');
+        const volumeMultiplier = 1.55;
+
+        function updateValueMechanism() {
+            const rawPrice = parseFloat(rawPriceInput.value);
+            const processedVolume = (1 * volumeMultiplier).toFixed(2);
+            const costPerPrms = (rawPrice / volumeMultiplier).toFixed(2);
+
+            rawPriceDisplay.textContent = rawPrice + ' €';
+            processedVolumeDisplay.textContent = processedVolume + ' prms';
+            rawPriceText.textContent = rawPrice;
+            costPerPrmsText.textContent = costPerPrms + ' €';
+        }
+        rawPriceInput.addEventListener('input', updateValueMechanism);
+
+        // ----------------------------------------------------
+        // 3. EKONOMICKÁ PRIEPASŤ (Value Gap Toggles)
+        // ----------------------------------------------------
+        const btnUrbar = document.getElementById('btnUrbar');
+        const btnTrh = document.getElementById('btnTrh');
+        
+        const gapData = {
+            urbar: { raw: 12, service: 15, market: 79, name: 'Nárokové drevo (Urbár)' },
+            trh: { raw: 36, service: 15, market: 79, name: 'Trhové drevo' }
+        };
+        let currentGapScenario = 'urbar';
+
+        function updateValueGap() {
+            const data = gapData[currentGapScenario];
+            const totalCost = data.raw + data.service;
+            const savings = data.market - totalCost;
+            const marginPercent = ((savings / data.market) * 100).toFixed(0);
+
+            // Update text elements
+            document.getElementById('gapName').textContent = data.name;
+            document.getElementById('gapRaw').textContent = data.raw;
+            document.getElementById('gapService').textContent = data.service;
+            document.getElementById('gapTotal').textContent = totalCost;
+            document.getElementById('gapMarket').textContent = data.market;
+            document.getElementById('gapSavings').textContent = savings;
+            document.getElementById('gapMargin').textContent = marginPercent;
+
+            // Update Chart Texts
+            document.getElementById('bar1Text').textContent = data.raw + '€';
+            document.getElementById('bar2Text').textContent = totalCost + '€';
+            document.getElementById('bar3Text').textContent = data.market + '€';
+
+            // Update Chart Heights
+            document.getElementById('bar1Fill').style.height = `${(data.raw / 100) * 100}%`;
+            document.getElementById('bar2BaseFill').style.height = `${(data.raw / 100) * 100}%`;
+            document.getElementById('bar2TopFill').style.height = `${(data.service / 100) * 100}%`;
+            document.getElementById('bar3Fill').style.height = `${(data.market / 100) * 100}%`;
+            document.getElementById('bar3Overlay').style.height = `${((savings) / data.market) * 100}%`;
+
+            // Update Buttons Styling
+            if (currentGapScenario === 'urbar') {
+                btnUrbar.className = "px-4 py-2 rounded-md text-sm font-medium transition-all bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+                btnTrh.className = "px-4 py-2 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white border border-transparent";
+            } else {
+                btnTrh.className = "px-4 py-2 rounded-md text-sm font-medium transition-all bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+                btnUrbar.className = "px-4 py-2 rounded-md text-sm font-medium transition-all text-slate-400 hover:text-white border border-transparent";
+            }
+        }
+
+        btnUrbar.addEventListener('click', () => { currentGapScenario = 'urbar'; updateValueGap(); });
+        btnTrh.addEventListener('click', () => { currentGapScenario = 'trh'; updateValueGap(); });
+
+        // ----------------------------------------------------
+        // 4. TECHNOLÓGIA AKO MULTIPLIKÁTOR (Machine vs Manual)
+        // ----------------------------------------------------
+        const machineToggleBtn = document.getElementById('machineToggleBtn');
+        const viewMachine = document.getElementById('viewMachine');
+        const viewManual = document.getElementById('viewManual');
+        let showMachine = true;
+
+        machineToggleBtn.addEventListener('click', () => {
+            showMachine = !showMachine;
+            if (showMachine) {
+                viewMachine.classList.remove('opacity-0', 'pointer-events-none');
+                viewManual.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                viewMachine.classList.add('opacity-0', 'pointer-events-none');
+                viewManual.classList.remove('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        // ----------------------------------------------------
+        // 6. MARŽOVÝ ENGINE - KALKULAČKA
+        // ----------------------------------------------------
+        const servicePriceInput = document.getElementById('servicePriceInput');
+        const annualHoursInput = document.getElementById('annualHoursInput');
+        
+        const capex = 43300;
+        const opexPerHour = 12.60;
+        const performancePerHour = 5;
+        const depreciation = 8660;
+
+        function updateCalculator() {
+            const servicePrice = parseFloat(servicePriceInput.value);
+            const annualHours = parseFloat(annualHoursInput.value);
+
+            // Update labels
+            document.getElementById('servicePriceDisplay').textContent = servicePrice + ' €';
+            document.getElementById('annualHoursDisplay').textContent = annualHours + ' h';
+
+            // Calculations
+            const hourlyRevenue = servicePrice * performancePerHour;
+            const contributionMargin = hourlyRevenue - opexPerHour;
+            const grossAnnualMargin = contributionMargin * annualHours;
+            const netAnnualProfit = grossAnnualMargin - depreciation;
+            const roi = ((netAnnualProfit / capex) * 100).toFixed(1);
+            const paybackMonths = netAnnualProfit > 0 ? ((capex / netAnnualProfit) * 12).toFixed(1) : 'N/A';
+
+            // Format numbers like sk-SK (space as thousand separator)
+            const formatCurrency = (num) => {
+                return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            };
+
+            // Outputs
+            document.getElementById('hourlyRevDisplay').textContent = hourlyRevenue.toFixed(2) + ' €';
+            document.getElementById('contMarginDisplay').textContent = contributionMargin.toFixed(2) + ' €';
+            
+            const netProfitEl = document.getElementById('netProfitDisplay');
+            netProfitEl.textContent = formatCurrency(netAnnualProfit) + ' €';
+            
+            const roiEl = document.getElementById('roiDisplay');
+            roiEl.textContent = roi + '%';
+            
+            const paybackEl = document.getElementById('paybackDisplay');
+            paybackEl.innerHTML = paybackMonths + ' <span class="text-base font-normal text-slate-500">mes.</span>';
+
+            // Colors for Profit/Loss
+            if (netAnnualProfit > 0) {
+                netProfitEl.className = "text-4xl font-extrabold font-mono tracking-tighter text-white";
+                roiEl.className = "text-2xl font-bold text-emerald-400";
+                paybackEl.className = "text-2xl font-bold text-white";
+                document.getElementById('profitTextZisk').className = "text-emerald-500/80";
+            } else {
+                netProfitEl.className = "text-4xl font-extrabold font-mono tracking-tighter text-red-400";
+                roiEl.className = "text-2xl font-bold text-red-400";
+                paybackEl.className = "text-2xl font-bold text-red-400";
+                document.getElementById('profitTextZisk').className = "text-slate-500";
+            }
+
+            // Profit Bar
+            const totalWidthBase = grossAnnualMargin || 1;
+            const odpisyWidth = Math.min((depreciation / totalWidthBase) * 100, 100);
+            document.getElementById('profitBarOdpisy').style.width = odpisyWidth + '%';
+            
+            if (netAnnualProfit > 0) {
+                document.getElementById('profitBarZisk').style.width = ((netAnnualProfit / grossAnnualMargin) * 100) + '%';
+                document.getElementById('profitBarZisk').style.display = 'block';
+            } else {
+                document.getElementById('profitBarZisk').style.display = 'none';
+            }
+        }
+
+        servicePriceInput.addEventListener('input', updateCalculator);
+        annualHoursInput.addEventListener('input', updateCalculator);
+
+        // ----------------------------------------------------
+        // 7. STRATEGICKÉ RIZIKÁ (Accordion)
+        // ----------------------------------------------------
+        const accordionHeaders = document.querySelectorAll('.acc-header');
+        let openRiskIndex = 0; // Default open first
+
+        accordionHeaders.forEach((header, index) => {
+            header.addEventListener('click', () => {
+                const card = header.closest('.glass-card');
+                const content = card.querySelector('.accordion-content');
+                const title = card.querySelector('.acc-title');
+                const icon = card.querySelector('.acc-icon');
+                const chevron = card.querySelector('.acc-chevron');
+                
+                // Clicking on already open closes it
+                if (openRiskIndex === index) {
+                    openRiskIndex = -1;
+                } else {
+                    openRiskIndex = index;
+                }
+
+                // Update all accordions
+                document.querySelectorAll('.glass-card[data-acc-index]').forEach((c, i) => {
+                    const cContent = c.querySelector('.accordion-content');
+                    const cTitle = c.querySelector('.acc-title');
+                    const cIcon = c.querySelector('.acc-icon');
+                    const cChevron = c.querySelector('.acc-chevron');
+
+                    if (i === openRiskIndex) {
+                        c.classList.add('border-emerald-500/40', 'shadow-[0_0_20px_rgba(16,185,129,0.05)]');
+                        cContent.classList.add('open');
+                        cTitle.classList.replace('text-white', 'text-emerald-400');
+                        cIcon.classList.replace('text-slate-500', 'text-emerald-400');
+                        
+                        // Change chevron icon definition
+                        cChevron.setAttribute('data-lucide', 'chevron-up');
+                        cChevron.classList.replace('text-slate-500', 'text-emerald-400');
+                    } else {
+                        c.classList.remove('border-emerald-500/40', 'shadow-[0_0_20px_rgba(16,185,129,0.05)]');
+                        cContent.classList.remove('open');
+                        cTitle.classList.replace('text-emerald-400', 'text-white');
+                        cIcon.classList.replace('text-emerald-400', 'text-slate-500');
+                        
+                        // Change chevron icon definition
+                        cChevron.setAttribute('data-lucide', 'chevron-down');
+                        cChevron.classList.replace('text-emerald-400', 'text-slate-500');
+                    }
+                });
+                
+                // Re-render only changed icons
+                lucide.createIcons();
+            });
+        });
+
+    </script>
+</body>
+</html>
